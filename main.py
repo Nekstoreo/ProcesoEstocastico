@@ -1,55 +1,97 @@
-import tkinter as tk
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Crear la ventana principal
-window = tk.Tk()
-window.title("Simulación de Proceso de Markov")
+# Definimos el espacio muestral
+espacio_muestral = [
+    "Salida", "Avenida Mediterraneo", "Arca Comunal", "Avenida Baltico",
+    "Impuesto sobre la renta", "Ferrocarril de Reading", "Avenida Oriental", "Suerte",
+    "Avenida Vermont", "Avenida Connecticut", "Carcel", "Plaza San Carlos",
+    "Compania de electricidad", "Avenida States", "Avenida Virginia", "Ferrocarril de Pennsylvania",
+    "Plaza St. James", "Arca Comunal", "Avenida Tennessee", "Avenida New York",
+    "Parking gratuito", "Avenida Kentucky", "Suerte", "Avenida Indiana",
+    "Avenida Illinois", "Ferrocarril B. & O.", "Avenida Atlantico", "Avenida Ventnor",
+    "Compania de agua", "Jardines Marvin", "Ve a la carcel", "Avenida Pacifico",
+    "Avenida Carolina del Norte", "Arca Comunal", "Avenida Pensilvania",
+    "Ferrocarril de Short Line", "Suerte", "Plaza Park", "Impuesto sobre lujo", "El Muelle"
+]
 
-# Agregar elementos de la interfaz, como etiquetas y cuadros de texto
-label1 = tk.Label(window, text="Número de estados:")
-entry1 = tk.Entry(window)
-label2 = tk.Label(window, text="Probabilidades de transición:")
-entry2 = tk.Entry(window)
+# Definimos las probabilidades de transición
+probabilidades_transicion = np.zeros((len(espacio_muestral), len(espacio_muestral)))
 
-# Agregar un botón para iniciar la simulación
-button = tk.Button(window, text="Simular")
+# Propiedades, salida, impuestos y parking
+for i in range(0, len(espacio_muestral)):
+    if (
+            espacio_muestral[i].startswith("Avenida")
+            or espacio_muestral[i].startswith("Plaza")
+            or espacio_muestral[i].startswith("Jardines")
+            or espacio_muestral[i] == "El Muelle"
+            or espacio_muestral[i].startswith("Ferrocarril")
+            or espacio_muestral[i].startswith("Compania")
+            or espacio_muestral[i] == "Salida"
+            or espacio_muestral[i].startswith("Impuesto")
+            or espacio_muestral[i] == "Parking gratuito"):
+        for j in range(i + 1, i + 13):
+            if j < len(espacio_muestral):
+                probabilidades_transicion[i, j] = round(1 / 12, 3)
+    # Ve a la carcel
+    if espacio_muestral[i] == "Ve a la carcel":
+        probabilidades_transicion[i, 10] = 1
+    # Carcel
+    if espacio_muestral[i] == "Carcel":
+        probabilidades_transicion[i, 10] = 1
 
-# Agregar un área de gráficos
-fig, ax = plt.subplots(figsize=(6, 4))
-canvas = FigureCanvasTkAgg(fig, master=window)
-canvas_widget = canvas.get_tk_widget()
+    # Suerte(16 cartas)
+    if espacio_muestral[i] == "Suerte":
+        # Retrocede 3 casillas
+        probabilidades_transicion[i, i - 3] = round(1 / 16, 3)
+        # Ir a la carcel
+        probabilidades_transicion[i, 10] = round(1 / 16, 3)
+        # Ir a la salida
+        probabilidades_transicion[i, 0] = round(1 / 16, 3)
+        # Ir a la Avenida Illinois
+        probabilidades_transicion[i, 24] = round(1 / 16, 3)
+        # Ir a la Plaza San Carlos
+        probabilidades_transicion[i, 11] = round(1 / 16, 3)
+        # Ir a la Plaza Park
+        probabilidades_transicion[i, 34] = round(1 / 16, 3)
+        # Ir al Ferrocarril de Reading
+        probabilidades_transicion[i, 5] = round(1 / 16, 3)
+        # Ir al ferrocarril o utilidad mas cercano:
+        if i == 7:
+            # Ferrocarril de Pennsylvania
+            probabilidades_transicion[i, 15] = round(1 / 16, 3)
+            # Compania de electricidad
+            probabilidades_transicion[i, 12] = round(1 / 16, 3)
+        elif i == 22:
+            # Ferrocarril B. & O.
+            probabilidades_transicion[i, 25] = round(1 / 16, 3)
+            # Compania de agua
+            probabilidades_transicion[i, 28] = round(1 / 16, 3)
+        elif i == 36:
+            # Ferrocarril de Short Line
+            probabilidades_transicion[i, 5] = round(1 / 16, 3)
+            # Compania de electricidad
+            probabilidades_transicion[i, 12] = round(1 / 16, 3)
+# Arca comunal(16 cartas)
+for i in range(0, len(espacio_muestral)):
+    if espacio_muestral[i] == "Arca Comunal":
+        # Ir a la carcel o a la salida
+        probabilidades_transicion[i, 10] = round(1 / 16, 3)
+        probabilidades_transicion[i, 0] = round(1 / 16, 3)
 
-# Colocar los elementos en la ventana
-label1.pack()
-entry1.pack()
-label2.pack()
-entry2.pack()
-button.pack()
-canvas_widget.pack()
+
+# imprimimos la matriz de probabilidades de transición
+
+def imprimir_matriz(matriz):
+    for fil in matriz:
+        for e in fil:
+            print(e, end=" ")
+        print()
 
 
-# Función para manejar el clic del botón y realizar la simulación
-def simulate():
-    num_states = int(entry1.get())
-    transition_probs = [float(prob) for prob in entry2.get().split(",")]
+imprimir_matriz(probabilidades_transicion)
 
-    # Realizar la simulación y generar gráficos
-    # (Reemplaza esto con tu lógica de simulación y gráficos)
-    days = np.arange(1, 31)
-    temperature = np.random.randint(50, 100, size=30)
+# Definimos la matriz de probabilidades de estado inicial
+probabilidades_estado_inicial = np.zeros((1, len(espacio_muestral)))
+probabilidades_estado_inicial[0, 0] = 1
 
-    ax.clear()
-    ax.plot(days, temperature)
-    ax.set_xlabel("Día")
-    ax.set_ylabel("Temperatura")
-    ax.set_title("Simulación de Temperatura")
-    canvas.draw()
-
-
-button.config(command=simulate)
-
-# Iniciar el bucle de la interfaz
-window.mainloop()
-
+# TODO: multiplicamos la matriz de probabilidades de estado inicial por la matriz de probabilidades de transición con n lanzamientos
