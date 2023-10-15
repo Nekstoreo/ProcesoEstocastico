@@ -7,6 +7,7 @@ class Casilla:
     def __init__(self, nombre):
         self.nombre = nombre
         self.siguiente = None
+        self.visitas = 0
 
     def __str__(self):
         return f"Casilla: {self.nombre} Siguiente: {self.siguiente.nombre}"
@@ -51,6 +52,8 @@ class Jugador:
             # Avanzar el jugador
             for _ in range(suma_dados):
                 self.posicion_actual = self.posicion_actual.siguiente
+            # Contar la visita a la casilla
+            self.posicion_actual.visitas += 1
             # Comprobar si the jugador cayó en "Ve a la Carcel"
             if self.posicion_actual.nombre == "Ve a la Carcel":
                 self.encarcelado = True
