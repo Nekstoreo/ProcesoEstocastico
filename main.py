@@ -193,8 +193,8 @@ button_partidas.pack()
 button_trayectoria.pack(side="left")
 button_turnos.pack(side="right")
 button_partidas.place(x=600, y=97)
-button_trayectoria.place(x=350, y=97)
-button_turnos.place(x=850, y=97)
+button_trayectoria.place(x=450, y=97)
+button_turnos.place(x=735, y=97)
 
 
 
