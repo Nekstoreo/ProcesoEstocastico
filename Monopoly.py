@@ -79,7 +79,7 @@ class Markov:
 
     def asignar_probabilidades_transicion(self) -> np.ndarray:
         matriz = np.zeros((len(self.nombrecasillas), len(self.nombrecasillas)))
-        prob_dados = Markov.calc_prob_dados()
+        prob_dados = Markov.calc_prob_dados(self)
         for i in range(len(self.nombrecasillas)):
             for j in range(2, 13):
                 if i + j < len(self.nombrecasillas):
@@ -87,8 +87,7 @@ class Markov:
         matriz[self.nombrecasillas.index("Ve a la Carcel"), :] = 0
         return matriz
 
-    @staticmethod
-    def calc_prob_dados() -> list:
+    def calc_prob_dados(self) -> list:
         probabilidades = [0] * 11
         # Contador para llevar un registro del total de combinaciones posibles
         total_combinaciones = 0
@@ -101,11 +100,6 @@ class Markov:
         # Calcula la probabilidad de obtener cada suma y redondea a 3 decimales
         for i in range(11):
             probabilidades[i] = round(probabilidades[i] / total_combinaciones, 3)
-        return probabilidades
+        return [0, 0] + probabilidades
 
-# Crear una instancia de la clase Markov
-markov = Markov()
-
-# Llamar al método asignar_probabilidades_transicion en la instancia
-print(markov.prob_dados)
 
