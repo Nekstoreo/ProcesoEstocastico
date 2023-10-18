@@ -27,7 +27,7 @@ def simular_partidas():
     n_partidas = int(entry_partidas.get())
     casillas_visitadas = {}  # Diccionario para registrar las casillas visitadas
 
-    for _ in range(n_partidas):
+    for i in range(n_partidas):
         tablero = Monopoly.Tablero()
         jugador = Monopoly.Jugador("Jugador 1", tablero)
 
