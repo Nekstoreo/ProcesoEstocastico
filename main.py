@@ -163,16 +163,24 @@ def limpiar_campo(event):
 # Crear la ventana de tkinter
 root = tk.Tk()
 root.title("Proceso Estocástico: Monopoly")
+root.iconbitmap("Monopoly.ico")
+root.geometry("1280x720")
+root.resizable(0,0)
+
 
 # Etiqueta y campo de entrada para el número de partidas
 label_autores = Label(
     root, text="Autores:\nJonhson Chen Yu\nNestor Miguel Gutierrez Arias\nSimón Tamara Gómez")
 label_autores.pack()
+label_autores.place(x=1, y=1)
+
 label_partidas = Label(root, text="Número de partidas:")
 label_partidas.pack()
+label_partidas.place(x=591, y=20)
 
 entry_partidas = Entry(root)
 entry_partidas.pack()
+entry_partidas.place(x=586, y=50)
 
 # Botones para iniciar la simulación
 button_trayectoria = ttk.Button(
@@ -182,12 +190,20 @@ button_partidas = ttk.Button(
 button_turnos = ttk.Button(root, text="Simular Turnos",
                            command=graficar_turnos_partidas)
 button_partidas.pack()
-button_trayectoria.pack()
-button_turnos.pack()
+button_trayectoria.pack(side="left")
+button_turnos.pack(side="right")
+button_partidas.place(x=600, y=97)
+button_trayectoria.place(x=350, y=97)
+button_turnos.place(x=850, y=97)
+
+
 
 # Frame para mostrar el gráfico
 frame = tk.Frame(root)
-frame.pack()
+frame.pack(side="bottom")
+
+
+
 
 # Obtén la lista de casillas del tablero
 casillas = [casilla.nombre for casilla in Monopoly.Tablero().casillas]
