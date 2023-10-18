@@ -108,3 +108,4 @@ markov = Markov()
 
 # Llamar al método asignar_probabilidades_transicion en la instancia
 print(markov.prob_dados)
+
