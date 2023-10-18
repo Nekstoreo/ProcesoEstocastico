@@ -54,3 +54,16 @@ plt.title("Recorrido del jugador en el Monopoly")
 plt.xticks(rotation=90)
 plt.tight_layout()
 plt.show()
+
+# Crear un gráfico de barras para mostrar las visitas a cada casilla
+casillas = list(visitas_por_casilla.keys())
+visitas = list(visitas_por_casilla.values())
+
+plt.figure(figsize=(12, 6))
+plt.bar(casillas, visitas)
+plt.xlabel("Casillas del Monopoly")
+plt.ylabel("Número de Visitas")
+plt.title("Número de Visitas a Cada Casilla en el Monopoly")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
