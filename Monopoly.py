@@ -75,6 +75,7 @@ class Markov:
             "Avenida Pensilvania", "Ferrocarril de Short Line", "Plaza Park", "Impuesto sobre lujo", "El Muelle"
         ]
         self.prob_transicion = self.asignar_probabilidades_transicion()
+        self.prob_dados = self.calc_prob_dados()
 
     def asignar_probabilidades_transicion(self) -> np.ndarray:
         matriz = np.zeros((len(self.nombrecasillas), len(self.nombrecasillas)))
@@ -101,3 +102,9 @@ class Markov:
         for i in range(11):
             probabilidades[i] = round(probabilidades[i] / total_combinaciones, 3)
         return probabilidades
+
+# Crear una instancia de la clase Markov
+markov = Markov()
+
+# Llamar al método asignar_probabilidades_transicion en la instancia
+print(markov.prob_dados)

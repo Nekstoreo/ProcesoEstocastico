@@ -114,12 +114,10 @@ def simular_turnos_partidas(n_partidas):
     for _ in range(n_partidas):
         tablero = Monopoly.Tablero()
         jugador = Monopoly.Jugador("Jugador 1", tablero)
-
         turnos = 0
         while not jugador.encarcelado:
             jugador.mover()
             turnos += 1
-
         turnos_terminacion.append(turnos)
 
     return turnos_terminacion
@@ -153,19 +151,12 @@ def graficar_turnos_partidas():
 # Función para limpiar el campo de entrada cuando se hace clic en él
 
 
-def limpiar_campo(event):
-    default_value = "Ingrese el número de partidas"
-    if entry_partidas.get() == default_value:
-        entry_partidas.delete(0, "end")
-        entry_partidas.config(fg="black")
-
-
 # Crear la ventana de tkinter
 root = tk.Tk()
 root.title("Proceso Estocástico: Monopoly")
-root.iconbitmap("Monopoly.ico")
+# root.iconbitmap("Monopoly.ico")
 root.geometry("1280x720")
-root.resizable(0,0)
+root.resizable(0, 0)
 
 
 # Etiqueta y campo de entrada para el número de partidas
@@ -193,17 +184,12 @@ button_partidas.pack()
 button_trayectoria.pack(side="left")
 button_turnos.pack(side="right")
 button_partidas.place(x=600, y=97)
-button_trayectoria.place(x=450, y=97)
-button_turnos.place(x=735, y=97)
-
-
+button_trayectoria.place(x=350, y=97)
+button_turnos.place(x=850, y=97)
 
 # Frame para mostrar el gráfico
 frame = tk.Frame(root)
 frame.pack(side="bottom")
-
-
-
 
 # Obtén la lista de casillas del tablero
 casillas = [casilla.nombre for casilla in Monopoly.Tablero().casillas]
