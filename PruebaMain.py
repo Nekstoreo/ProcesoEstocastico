@@ -26,12 +26,24 @@ jugador = Monopoly.Jugador("Jugador 1", tablero)
 
 # Empezamos a jugar
 casillas_visitadas = []  # Lista para rastrear las casillas visitadas
+visitas_por_casilla = {}  # Diccionario para rastrear las visitas a cada casilla
 
 while not jugador.encarcelado:
     casilla_actual = jugador.posicion_actual.nombre
     casillas_visitadas.append(casilla_actual)  # Registra la casilla actual
+
+    # Registra la visita a la casilla en el diccionario
+    if casilla_actual in visitas_por_casilla:
+        visitas_por_casilla[casilla_actual] += 1
+    else:
+        visitas_por_casilla[casilla_actual] = 1
+
     jugador.mover()
     print(jugador)
+
+# Imprime el número total de visitas a cada casilla
+for casilla, visitas in visitas_por_casilla.items():
+    print(f"El jugador visitó la casilla {casilla} {visitas} veces")
 
 # Crear un gráfico para mostrar el recorrido del jugador
 plt.figure(figsize=(12, 6))
