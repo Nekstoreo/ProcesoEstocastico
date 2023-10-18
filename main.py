@@ -38,7 +38,7 @@ print(f"El jugador ha sido encarcelado después de visitar {casillasvisitadas} c
 def simular_partidas(n_partidas):
     casillas_visitadas = {}  # Diccionario para registrar las casillas visitadas
 
-    for _ in range(n_partidas):
+    for i in range(n_partidas):
         tablero = Monopoly.Tablero()
         jugador = Monopoly.Jugador("Jugador 1", tablero)
 
@@ -54,8 +54,8 @@ def simular_partidas(n_partidas):
 
     return casillas_visitadas
 
-# Simula 1000 partidas (puedes ajustar este número)
-resultados = simular_partidas(1000)
+# Simula partidas (puedes ajustar este número)
+resultados = simular_partidas(1)
 
 # Graficar los resultados
 casillas = list(resultados.keys())
