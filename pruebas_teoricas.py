@@ -40,16 +40,14 @@ def cutDicc(dicc, n):
 
 
 def graficar_casillas_visitadas(casillas_visitadas):
-    nombres_casillas = list(casillas_visitadas.keys())
-    valores_casillas = list(casillas_visitadas.values())
-    # Crear el frame para el gráfico
-    frame = tk.Frame(window)
-    frame.pack()
     # Limpiar el área del gráfico anterior (si existe)
     for widget in frame.winfo_children():
         widget.destroy()
+
+    nombres_casillas = list(casillas_visitadas.keys())
+    valores_casillas = list(casillas_visitadas.values())
     # Crear el gráfico
-    fig, ax = plt.subplots(figsize=(10, 4))
+    fig, ax = plt.subplots(figsize=(12, 6))
     ax.bar(nombres_casillas, valores_casillas)
     ax.set_xlabel("Casillas del Monopoly")
     ax.set_ylabel("Frecuencia")
@@ -62,16 +60,14 @@ def graficar_casillas_visitadas(casillas_visitadas):
 
 
 def graficar_prob_dados():
+    # Limpiar el área del gráfico anterior (si existe)
+    for widget in frame.winfo_children():
+        widget.destroy()
+
     markov = mp.Markov()
     prob_dados = {i: markov.prob_dados[i] for i in range(13)}
     valor_dados = list(prob_dados.keys())
     prob_dados = list(prob_dados.values())
-    # Crear el frame para el gráfico
-    frame = tk.Frame(window)
-    frame.pack()
-    # Limpiar el área del gráfico anterior (si existe)
-    for widget in frame.winfo_children():
-        widget.destroy()
     # Crear el gráfico
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.bar(valor_dados, prob_dados)
@@ -130,5 +126,10 @@ button_casillas_visitadas.pack()
 button_prob_dados = tk.Button(
     window, text="Generar gráfico Dados", command=graficar_prob_dados)
 button_prob_dados.pack()
-# Run the Tkinter event loop
+
+# Frame para mostrar el gráfico
+frame = tk.Frame(window)
+frame.pack()
+
+# Iniciar el bucle principal de tkinter
 window.mainloop()
